@@ -2,17 +2,16 @@
 /**
  * Arquivo para registrar os dados de um aluno no banco de dados.
  */
-if (isset($_REQUEST['cadastrar']))
+if (isset($_REQUEST['atualizar']))
 {
   try 
 {
     include ' includes/conexao.php';
 
-    $sql = "INSERT INTO alunos (nome,data_nascimento,sexo
+    $sql =  "UPDATE alunos (nome,data_nascimento,sexo
                                  genero,cpf,cidade,estado,bairro,
                                  rua,cep)
-                                 VALUES (?,?,?,?,?,?,?,?,?,?)";
-                                 
+                                WHERE id = ?";                                 
   $stmt = $conexao->prepare($sql);
   $stmt->bindParam(1,$_REQUEST['nome']);     
   $stmt->bindParam(2,$_REQUEST['data_nascimento']);  
@@ -27,18 +26,31 @@ if (isset($_REQUEST['cadastrar']))
   $stmt->execute();
   
   
- } catch(Exception $e) {
+ } 
+ 
+    if ( isset($_REQUEST['excluir']))
+ {
+     $stmt = $conexao-> prepare("DELETE FROM aluno WHERE id = ?");
+     $stmt -> bindParam(1, $_request['id_aluno']);
+     $stmt->execute();
+     header("location:lista_alunos.php");
+ } 
+  $stmt = $conexao-> prepare("SELECT * FROM aluno WHERE id = ?");
+  $stmt_>bindParam(1,$_REQUEST['id_aluno']);
+  $stmt-> execute();
+  $aluno = $stmt-> fechObject();
+
+  catch(Exception $e) {
      echo $e->getMessage();
  }
 }
-
 ?>
 <link href ="css/estilo.css" type="text/css" rel="stylesheet"/>
 <?php include_once 'includes/cabecalho.php' ?>
 <div>
 <fieldset>
 <legend>Cadastro Alunos</legend>
-<form action="cadastrar_alunos.php?atualizar=true">
+<form action="editar_alunos.php?atualizar=true">
 <label>Nome:<input type= "text" name ="nome" required /> </label>
 <label>Cidade:<input type= "text" name ="cidade" required /> </label>
 <label>Cep :<input type= "text" name ="cep" required /> </label>
@@ -50,4 +62,3 @@ if (isset($_REQUEST['cadastrar']))
 </form>
 </legend>
 </div>
-
