@@ -2,11 +2,13 @@
 /**
  * Arquivo para registrar os dados de um aluno no banco de dados.
  */
-if (isset($_REQUEST['atualizar']))
-{
+
   try 
 {
     include ' includes/conexao.php';
+
+    if (isset($_REQUEST['atualizar']))
+{
 
     $sql =  "UPDATE alunos (nome,data_nascimento,sexo
                                  genero,cpf,cidade,estado,bairro,
@@ -23,12 +25,13 @@ if (isset($_REQUEST['atualizar']))
   $stmt->bindParam(8,$_REQUEST['bairro']);  
   $stmt->bindParam(9,$_REQUEST['rua']);      
   $stmt->bindParam(10,$_REQUEST['cep']);  
+  $stmt->bindParam(11,$_REQUEST['id_aluno']); 
   $stmt->execute();
   
   
  } 
  
-    if ( isset($_REQUEST['excluir']))
+  if(isset($_REQUEST['excluir']))
  {
      $stmt = $conexao-> prepare("DELETE FROM aluno WHERE id = ?");
      $stmt -> bindParam(1, $_request['id_aluno']);
@@ -40,10 +43,10 @@ if (isset($_REQUEST['atualizar']))
   $stmt-> execute();
   $aluno = $stmt-> fechObject();
 
-  catch(Exception $e) {
+ } catch(Exception $e) {
      echo $e->getMessage();
  }
-}
+
 ?>
 <link href ="css/estilo.css" type="text/css" rel="stylesheet"/>
 <?php include_once 'includes/cabecalho.php' ?>

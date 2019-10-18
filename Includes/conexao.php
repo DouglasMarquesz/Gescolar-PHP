@@ -1,34 +1,29 @@
 <?php
-
-/*
- * o arquivo conexão.php será usado por todas a páginas que necessitem
- * realizar um conexão com o o bando de dados. para nao termos que digigar
- * os dados de acesso ao banco em todas as paginas, centralizamos eles
- * em um unico arquivo e utilizamos o comando include, quando forn cessario.
+/**
+ * O arquivo conexão.php será usado por totas as páginas que necessitem 
+ * realizar uma conexão com o banco de dados .Para  não termos que digitar 
+ * os dados de acesso ao banco em todas as páginas , centralizamos eles em um 
+ * único arquivo e utilizamos o comando include , quando for necessário.
  */
 
  /**
- * O laço try { } catch serve para tentar executar um código. Caso algum erro
- * ocorra ele é caputuyrado no catch, entre uma exeção é disparada e podemos
- * pegar a mensagem de erro com o método getMessa(), e customizar a mensagem
- * de erro para o usuario
- */
+  * o laço try { } catch serve para tentar executar um código um código . Caso algum erro 
+  *ocorra ele é capturado no catch , onde uma exceção é disparada e podemos
+  * pegar a msg de erro com o método getMessage (), e customizar a msg 
+  *de erro paro o usuário.
+  */
+  try {
+      $usuario = "root"; // usuário do MySQL.
+      $senha = "1234"; //senha do MYSQL.
+      $host = "localhost"; // host onde o servidor My sql esta sendo executado .
+      $bd = "gescolar "; // nome do bd.
+    // aqui vamos definir configurações para o tratamentamento de errros e acentos.
+    $config = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_INIT_COMMAND=> "SET NAMES utf8");
+  //Aqui criamos uma variável qu abriga o objeto PDO, a conexão com o MySQL.
+  $conexao = new PDO( "mysql:host=" . $host . ";dbname =" . $bd, $usuario,$senha,$config);
 
- try {
-
-    $usuario = "root"; //usuario do MySQL.
-    $senha = ""; //senha do MySQL.
-    $host = "localhost"; //host onde o servidor MySQL está sendo executado.
-    $bd = "gescolar"; //nome do banco de dados.
-
-    $config = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXEPTION,
-                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
- 
-    // Arqui criamos um varíavel que abriga o objeto PDO, a conexao com o MySQL.
-    $conexao = new PDO("mysql:host=" . $host . ";dbname=" . $bd, $usuario, $senha, $config);
-
- } catch(Exception $e) {
-     echo $e->getMessage();
- }
-
-?>
+    }  catch(Exception $e) {
+      echo $e->getMessage ();
+  }
+                
