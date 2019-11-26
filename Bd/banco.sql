@@ -6,7 +6,7 @@ create table aluno (
 	id int auto_increment,
 	nome varchar(255),
 	data_nascimento date,
-	sexo char(1),
+	sexo char(11),
 	genero varchar(255),
 	cpf char(11),
 	cidade varchar(100),
